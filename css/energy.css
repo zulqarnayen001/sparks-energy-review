@@ -246,7 +246,7 @@
 .pov .four-row > div { padding: 11px 14px 12px 0; font-size: 20px; line-height: 1.3; }
 .pov .four-row .lab { font: 700 22px/1.25 "Johnson Text", Arial, sans-serif; color: var(--red-dk); }
 .pov .four-row.hdr { border-bottom: 1.5px solid #000; }
-.pov .four-row.hdr > div { font: 700 16px/1.2 "Johnson Text", Arial, sans-serif; letter-spacing: .1em; text-transform: uppercase; padding: 4px 14px 8px 0; }
+.pov .four-row.hdr > div { font: 700 17px/1.2 "Johnson Text", Arial, sans-serif; letter-spacing: .08em; text-transform: uppercase; padding: 4px 14px 8px 0; }
 .pov .mrow.wide { grid-template-columns: 70px 1fr 548px; }
 .pov .mrow.wide .ttl b { font-size: 22px; font-weight: 600; }
 .pov .mrow.wide .ttl .chip { display: none; } /* the green button already shows the match */
