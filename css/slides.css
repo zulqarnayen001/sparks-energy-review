@@ -1,0 +1,273 @@
+/* Slides on the 1280 x 720 stage, in the J&J 2023 visual language (v3):
+   paneling (red, warm-grey and photo panels offset on a grid, never all aligned), dynamic headlines in Johnson
+   Display, key lines for lists and numbers. Type always sits on a solid panel with clear space round it, never on a
+   photo. No gradients.
+   Type scale (slide px; the slide usually shows at 80 to 100% of this): lead 27, body 24, labels 22, small 20,
+   fine print 17 (credits and sources only).
+   Contrast: white on J&J Red 4.5:1 (AA); J&J Red on white 4.5:1; small red text on warm grey uses the darker red
+   (5.9:1); body text is black or #3A3532 (11:1). */
+
+.stage.pov { background: #fff; color: #000; font: 400 24px/1.45 "Johnson Text", "Segoe UI", Arial, sans-serif; }
+.pov * { box-sizing: border-box; }
+.pov p { margin: 0; }
+.pov .fadein { animation: slidefade .35s ease-out both; }
+@keyframes slidefade { from { opacity: 0; } to { opacity: 1; } }
+.pov .abs { position: absolute; }
+/* objects wait hidden until their cue point in the narration */
+.pov .wait { opacity: 0 !important; visibility: hidden; pointer-events: none; }
+.pov .reveal { animation: elin .65s cubic-bezier(.22,1,.36,1) both; }
+@keyframes elin { from { opacity: 0; translate: 0 22px; } to { opacity: 1; translate: 0 0; } }
+
+/* ---------- panels: the J&J paneling system. They wipe in from an edge, like panels sliding on the grid ---------- */
+.pov .pnl { position: absolute; overflow: hidden; }
+.pov .pnl.red { background: var(--red); color: #fff; }
+.pov .pnl.gray { background: #F1EFED; }
+.pov .pnl.white { background: #fff; }
+.pov .pnl .photo { position: absolute; inset: 0; background-size: cover; background-position: center; }
+.pov .pnl .photo.kb { animation: kb 18s ease-out both; }
+@keyframes kb { from { transform: scale(1.08); } to { transform: scale(1); } }
+.pov .pnl.reveal { animation: wipeL .8s cubic-bezier(.7,0,.3,1) both; }
+.pov .pnl.from-r.reveal { animation-name: wipeR; }
+.pov .pnl.from-t.reveal { animation-name: wipeT; }
+.pov .pnl.from-b.reveal { animation-name: wipeB; }
+@keyframes wipeL { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes wipeR { from { clip-path: inset(0 0 0 100%); } to { clip-path: inset(0 0 0 0); } }
+@keyframes wipeT { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes wipeB { from { clip-path: inset(100% 0 0 0); } to { clip-path: inset(0 0 0 0); } }
+/* text inside a panel arrives just after its panel */
+.pov .pnl.reveal > .abs { animation: elin .7s .32s cubic-bezier(.22,1,.36,1) both; }
+
+/* ---------- type ---------- */
+.pov .eyebrow { font: 700 18px/1.25 "Johnson Text", Arial, sans-serif; letter-spacing: .14em; text-transform: uppercase; color: #000; margin: 0 0 16px; }
+.pov .eyebrow.red { color: var(--red); }
+.pov .eyebrow.red.dk { color: var(--red-dk); } /* small red text on warm grey needs the darker red for AA */
+.pov .eyebrow.white { color: #fff; }
+.pov .dh { font: 400 72px/1.02 "Johnson Display", Georgia, serif; letter-spacing: -.015em; margin: 0; color: #000; }
+.pov .dh span { display: block; }
+.pov .dh .in1 { padding-left: 1.15em; } .pov .dh .in2 { padding-left: 2.2em; }
+.pov .dh .r { color: var(--red); }
+.pov .dh.white, .pov .dh.white .r { color: #fff; }
+.pov .lead { font-size: 27px; line-height: 1.42; }
+.pov .body { font-size: 24px; line-height: 1.45; }
+.pov .small { font-size: 20px; line-height: 1.4; color: #3A3532; }
+.pov .fine { font-size: 17px; line-height: 1.35; color: #564C47; }
+.pov .fine.white { color: #fff; }
+.pov h3 { font: 700 24px/1.25 "Johnson Text", Arial, sans-serif; margin: 0; }
+
+/* ---------- key lines (thin rules that separate and number content) ---------- */
+.pov .kl { border-top: 1.5px solid #000; padding-top: 14px; }
+.pov .kl.white { border-top-color: rgba(255,255,255,.9); }
+.pov .kn { font: 400 64px/0.9 "Johnson Display", Georgia, serif; color: var(--red); font-variant-numeric: tabular-nums; }
+.pov .kn.white { color: #fff; }
+
+/* ---------- buttons ---------- */
+.pov .btn { display: inline-flex; align-items: center; gap: 12px; height: 60px; padding: 0 30px; border-radius: 30px; border: 2px solid var(--red); background: var(--red); color: #fff; font: 700 22px/1 "Johnson Text", Arial, sans-serif; cursor: pointer; transition: background .2s, border-color .2s, color .2s; }
+.pov .btn:hover { background: var(--red-dk); border-color: var(--red-dk); }
+.pov .btn svg { width: 22px; height: 22px; transition: transform .25s cubic-bezier(.22,1,.36,1); }
+.pov .btn:hover svg { transform: translateX(3px); }
+.pov .btn.ghost { background: #fff; color: #000; border-color: #000; }
+.pov .btn.ghost:hover { background: #000; color: #fff; }
+.pov .btn.on-red { background: #fff; color: var(--red-dk); border-color: #fff; }
+.pov .btn.on-red:hover { background: #F1EFED; border-color: #F1EFED; }
+.pov .btn[disabled] { background: #E8E6E3; border-color: #E8E6E3; color: #564C47; cursor: default; }
+.pov .btn.sm { height: 52px; padding: 0 24px; font-size: 20px; }
+.pov button:focus-visible, .pov [tabindex]:focus-visible { outline: 3px solid #000; outline-offset: 3px; box-shadow: 0 0 0 6px #fff; }
+.pov .red button:focus-visible, .pov button.on-red:focus-visible, .pov .tile.red:focus-visible { outline-color: #fff; box-shadow: 0 0 0 6px #000; }
+.pov .chip { display: inline-flex; align-items: center; gap: 6px; padding: 7px 12px; font: 700 18px/1 "Johnson Text", Arial, sans-serif; }
+.pov .chip svg { width: 18px; height: 18px; }
+.pov .chip.ok { background: var(--ok); color: #fff; }
+.pov .chip.white { background: #fff; color: var(--ok); }
+.pov .counter { font: 700 20px/1 "Johnson Text", Arial, sans-serif; color: #000; }
+
+/* ---------- start cover (shown until the learner starts) ---------- */
+.pov.cover { z-index: 75; background: #fff; }
+.pov.cover .cv-red { left: 0; top: 0; width: 720px; height: 720px; animation: wipeL .9s cubic-bezier(.7,0,.3,1) both; }
+.pov.cover .cv-logo { position: absolute; left: 64px; top: 56px; height: 40px; }
+.pov.cover .cv-eye { position: absolute; left: 64px; top: 196px; margin: 0; }
+.pov.cover .cv-h { position: absolute; left: 60px; top: 236px; font-size: 104px; line-height: .98; }
+.pov.cover .cv-sub { position: absolute; left: 64px; top: 466px; width: 560px; font: 400 27px/1.38 "Johnson Text", Arial, sans-serif; color: #fff; }
+.pov.cover .cv-go { position: absolute; left: 64px; top: 592px; height: 68px; padding: 0 34px 0 14px; border-radius: 34px; border: 0; background: #fff; color: var(--red-dk); font: 700 24px/1 "Johnson Text", Arial, sans-serif; display: inline-flex; align-items: center; gap: 16px; cursor: pointer; box-shadow: 0 10px 30px rgba(0,0,0,.18); transition: transform .25s cubic-bezier(.22,1,.36,1), box-shadow .25s; }
+.pov.cover .cv-go .ic { width: 46px; height: 46px; border-radius: 50%; background: var(--red); color: #fff; display: grid; place-items: center; }
+.pov.cover .cv-go .ic svg { width: 18px; height: 18px; margin-left: 3px; }
+.pov.cover .cv-go:hover { transform: translateY(-2px); box-shadow: 0 14px 36px rgba(0,0,0,.24); }
+.pov.cover .cv-go:focus-visible { outline: 3px solid #fff; outline-offset: 5px; box-shadow: 0 10px 30px rgba(0,0,0,.18); }
+.pov.cover .cv-photo { left: 720px; top: 0; width: 560px; height: 476px; animation: wipeR .9s .15s cubic-bezier(.7,0,.3,1) both; }
+.pov.cover .cv-info { left: 720px; top: 476px; width: 560px; height: 244px; padding: 30px 48px 0; display: grid; align-content: start; gap: 0; animation: wipeB .8s .3s cubic-bezier(.7,0,.3,1) both; }
+.pov.cover .cv-meta { display: grid; grid-template-columns: 76px 1fr; align-items: baseline; gap: 12px; border-top: 1.5px solid #000; padding: 10px 0 12px; font-size: 21px; line-height: 1.3; }
+.pov.cover .cv-meta .n { font: 400 40px/1 "Johnson Display", Georgia, serif; color: var(--red-dk); }
+.pov.cover.leaving { animation: coverout .5s cubic-bezier(.7,0,.3,1) forwards; pointer-events: none; }
+@keyframes coverout { from { clip-path: inset(0 0 0 0); } to { clip-path: inset(0 0 100% 0); } }
+
+/* ---------- 1. welcome ---------- */
+.pov .t-word { font: 400 92px/1 "Johnson Display", Georgia, serif; letter-spacing: -.02em; }
+.pov .disclaim { border-left: 3px solid var(--red); padding-left: 12px; display: block; }
+
+/* ---------- 2. three notes ---------- */
+.pov .note { position: absolute; width: 470px; background: #fff; padding: 14px 24px 18px; box-shadow: 0 14px 34px rgba(0,0,0,.12); }
+.pov .note .who { display: flex; justify-content: space-between; font: 700 18px/1.2 "Johnson Text", Arial, sans-serif; letter-spacing: .06em; text-transform: uppercase; padding-bottom: 9px; margin-bottom: 10px; border-bottom: 1.5px solid #000; }
+.pov .note .txt { font: italic 400 24px/1.38 "Johnson Text", Arial, sans-serif; }
+.pov .note mark { background: none; color: inherit; box-shadow: inset 0 -10px 0 rgba(235,23,0,.22); }
+.pov .ask .q { font: 700 26px/1.35 "Johnson Text", Arial, sans-serif; margin-bottom: 18px; }
+.pov .ask .row { display: flex; gap: 14px; flex-wrap: wrap; }
+
+/* feedback card (correct / not quite) */
+.pov .fbx { position: absolute; inset: 0; z-index: 30; display: flex; align-items: flex-end; justify-content: flex-start; padding: 0 0 44px 56px; background: rgba(31,26,23,.45); animation: slidefade .3s both; }
+.pov .fbx.right { justify-content: flex-end; padding: 0 56px 44px 0; }
+.pov .fbcard { position: relative; width: 640px; background: #fff; padding: 0 34px 30px; box-shadow: 0 24px 60px rgba(0,0,0,.35); animation: fbin .5s cubic-bezier(.22,1,.36,1) both; border-top: 8px solid var(--red); }
+.pov .fbcard.ok { border-top-color: var(--ok); } .pov .fbcard.no { border-top-color: #000; }
+@keyframes fbin { from { opacity: 0; transform: translateY(26px); } to { opacity: 1; transform: none; } }
+.pov .fbcard .tt { display: flex; align-items: center; gap: 14px; font: 400 40px/1.1 "Johnson Display", Georgia, serif; padding: 22px 0 14px; }
+.pov .fbcard .tt .ic { width: 46px; height: 46px; border-radius: 50%; display: grid; place-items: center; color: #fff; flex: none; background: #000; }
+.pov .fbcard.ok .tt .ic { background: var(--ok); }
+.pov .fbcard .tt .ic svg { width: 24px; height: 24px; }
+.pov .fbcard p { font-size: 24px; line-height: 1.45; margin-bottom: 22px; }
+.pov .fbcard .row { display: flex; gap: 12px; flex-wrap: wrap; }
+
+/* ---------- 3. why DISH: big numbers with key lines on a red panel ---------- */
+.pov .bigrow { display: grid; grid-template-columns: 196px 1fr; align-items: end; gap: 22px; border-top: 1.5px solid rgba(255,255,255,.9); padding: 14px 0 20px; }
+.pov .bigrow .n { font: 400 96px/0.9 "Johnson Display", Georgia, serif; color: #fff; font-variant-numeric: tabular-nums; letter-spacing: -.02em; transition: opacity .5s ease; }
+.pov .bigrow .l { font: 500 25px/1.3 "Johnson Text", Arial, sans-serif; color: #fff; padding-bottom: 6px; }
+.pov .bigrow.dim .n { opacity: .3; }
+
+/* ---------- 4. the four outcomes: offset panels ---------- */
+.pov .tile { position: absolute; width: 272px; height: 350px; border: 0; cursor: pointer; padding: 18px 24px 24px; text-align: left; display: flex; flex-direction: column; font: inherit; transition: transform .35s cubic-bezier(.22,1,.36,1), box-shadow .35s; }
+.pov .tile.red { background: var(--red); color: #fff; }
+.pov .tile.gray { background: #F1EFED; color: #000; }
+.pov .tile:hover { transform: translateY(-10px); box-shadow: 0 24px 44px rgba(0,0,0,.18); }
+.pov .tile .big { font: 400 196px/0.95 "Johnson Display", Georgia, serif; color: transparent; -webkit-text-stroke: 2.5px currentColor; margin: -6px 0 0 -6px; transition: color .5s ease; }
+.pov .tile.red .big { -webkit-text-stroke-color: #fff; }
+.pov .tile.gray .big { -webkit-text-stroke-color: var(--red); }
+.pov .tile.red.seen .big { color: #fff; } .pov .tile.gray.seen .big { color: var(--red); }
+.pov .tile .word { font: 700 25px/1.2 "Johnson Text", Arial, sans-serif; margin-top: auto; }
+.pov .tile .hint { display: inline-flex; align-items: center; gap: 8px; font: 500 20px/1.3 "Johnson Text", Arial, sans-serif; margin-top: 8px; }
+.pov .tile .hint svg { width: 18px; height: 18px; transition: transform .25s; }
+.pov .tile:hover .hint svg { transform: translateX(4px); }
+.pov .tile .done { position: absolute; top: 16px; right: 16px; }
+.pov .prog { display: flex; align-items: center; gap: 14px; }
+.pov .pip { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #000; display: inline-block; margin-right: 6px; transition: background .3s, transform .3s; }
+.pov .pip.on { background: var(--red); border-color: var(--red); transform: scale(1.1); }
+
+/* layer: a panel over the slide (Storyline layer); the slide behind is inert. It sits high, so captions have room
+   underneath it */
+.pov .pv-layer { position: absolute; inset: 0; z-index: 40; display: grid; justify-items: center; align-items: start; padding-top: 24px; }
+.pov .pv-layer .scrim { position: absolute; inset: 0; background: rgba(31,26,23,.74); backdrop-filter: blur(3px); animation: slidefade .3s both; }
+.pov .lay-panel { position: relative; width: 1168px; height: 600px; overflow: hidden; background: #fff; display: grid; grid-template-columns: 280px 1fr; box-shadow: 0 30px 80px rgba(0,0,0,.4); animation: pushin .55s cubic-bezier(.22,1,.36,1) both; }
+@keyframes pushin { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+.pov .lay-panel .side { background: var(--red); color: #fff; padding: 22px 30px 30px; display: flex; flex-direction: column; }
+.pov .lay-panel .side .big { font: 400 230px/.85 "Johnson Display", Georgia, serif; }
+.pov .lay-panel .side .word { font: 400 36px/1.08 "Johnson Display", Georgia, serif; margin-top: auto; }
+.pov .lay-panel .body { padding: 34px 40px 28px; display: grid; grid-template-columns: 1fr 384px; grid-template-rows: 1fr auto; gap: 16px 36px; }
+.pov .lay-panel .txt { display: flex; flex-direction: column; gap: 22px; }
+.pov .lay-panel .txt h3 { font: 700 18px/1.2 "Johnson Text", Arial, sans-serif; letter-spacing: .12em; text-transform: uppercase; border-top: 1.5px solid #000; padding-top: 12px; margin-bottom: 10px; }
+.pov .lay-panel .txt p { font-size: 24px; line-height: 1.42; }
+.pov .lay-panel ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.pov .lay-panel li { font-size: 23px; line-height: 1.32; padding-left: 28px; position: relative; }
+.pov .lay-panel li::before { content: ""; position: absolute; left: 2px; top: .48em; width: 12px; height: 12px; background: var(--red); }
+.pov .lay-panel .x { position: absolute; top: 16px; right: 16px; width: 52px; height: 52px; border-radius: 50%; border: 1.5px solid #000; background: #fff; display: grid; place-items: center; cursor: pointer; color: #000; z-index: 2; }
+.pov .lay-panel .x:hover { background: #000; color: #fff; }
+.pov .lay-panel .x svg { width: 22px; height: 22px; }
+.pov .lay-panel .foot { grid-column: 1 / -1; display: flex; justify-content: flex-end; }
+/* clinical image in a layer: a figure with its caption and credit; graphic photos wait behind a button */
+.pov .fig { display: flex; flex-direction: column; gap: 8px; margin-top: 44px; }
+.pov .fig .frame { position: relative; width: 384px; height: 288px; background: #F1EFED; overflow: hidden; }
+.pov .fig .frame img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.pov .fig .frame.contain img { object-fit: contain; background: #000; }
+.pov .fig .cap { font: 500 19px/1.35 "Johnson Text", Arial, sans-serif; }
+.pov .fig .credit { font: 400 17px/1.3 "Johnson Text", Arial, sans-serif; color: #564C47; }
+.pov .fig .gate { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: flex-start; justify-content: flex-end; gap: 14px; padding: 22px; background: #F1EFED; }
+.pov .fig .gate p { font-size: 21px; line-height: 1.35; }
+.pov .fig .pending { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: center; gap: 10px; padding: 26px; border: 1.5px dashed #81766F; }
+.pov .fig .pending b { font: 400 30px/1.1 "Johnson Display", Georgia, serif; }
+
+/* ---------- 5. where it happens: layer explorer ---------- */
+.pov .layers-img { position: absolute; }
+.pov .layers-img img { display: block; width: 100%; height: 100%; }
+.pov .band { position: absolute; left: 0; right: 0; transition: background .35s, box-shadow .35s; }
+.pov .layers.has-pick .band { background: rgba(255,255,255,.62); }
+.pov .layers.has-pick .band.on { background: transparent; box-shadow: inset 0 0 0 4px var(--red); }
+.pov .lpick { position: absolute; left: 0; display: flex; align-items: center; gap: 14px; min-height: 58px; padding: 0 12px 0 0; border: 0; background: none; cursor: pointer; font: 600 22px/1.25 "Johnson Text", Arial, sans-serif; color: #000; text-align: left; }
+.pov .lpick .lead-line { width: 64px; height: 1.5px; background: #000; flex: none; transition: width .3s, background .3s, height .3s; }
+.pov .lpick:hover .lead-line { width: 78px; }
+.pov .lpick .dot { width: 16px; height: 16px; border-radius: 50%; border: 2px solid #000; flex: none; transition: background .3s, border-color .3s; }
+.pov .lpick[aria-pressed="true"] { color: var(--red-dk); }
+.pov .lpick[aria-pressed="true"] .lead-line { background: var(--red); height: 3px; }
+.pov .lpick[aria-pressed="true"] .dot { background: var(--red); border-color: var(--red); }
+.pov .lpick.seen .dot { background: #000; }
+.pov .lpick.seen[aria-pressed="true"] .dot { background: var(--red); }
+.pov .lcard .cat { font: 400 40px/1.08 "Johnson Display", Georgia, serif; color: #000; margin: 6px 0 14px; }
+.pov .lcard p.body { font-size: 24px; line-height: 1.42; }
+.pov .lcard .cat, .pov .lcard p.body { transition: opacity .25s; }
+.pov .lcard.swap .cat, .pov .lcard.swap p.body { opacity: 0; }
+
+/* ---------- 6. two scales ---------- */
+.pov .scol .hd { display: grid; grid-template-columns: 76px 1fr; gap: 12px; align-items: start; padding-bottom: 14px; border-bottom: 1.5px solid #000; }
+.pov .scol .hd .kn { font-size: 56px; }
+.pov .scol .hd b { display: block; font: 700 24px/1.2 "Johnson Text", Arial, sans-serif; }
+.pov .scol .hd span { display: block; font: 500 20px/1.3 "Johnson Text", Arial, sans-serif; color: #3A3532; }
+.pov .placed { display: grid; grid-template-columns: 28px 1fr; gap: 12px; padding: 12px 0; border-bottom: 1px solid #C1BBB3; font-size: 22px; line-height: 1.3; animation: elin .45s cubic-bezier(.22,1,.36,1) both; }
+.pov .placed .ck { width: 24px; height: 24px; border-radius: 50%; background: var(--ok); color: #fff; display: grid; place-items: center; margin-top: 2px; }
+.pov .placed .ck svg { width: 15px; height: 15px; }
+.pov .sortcard { background: #fff; padding: 18px 22px 20px; box-shadow: 0 12px 30px rgba(0,0,0,.1); animation: elin .45s cubic-bezier(.22,1,.36,1) both; }
+.pov .sortcard .txt { font: italic 400 25px/1.35 "Johnson Text", Arial, sans-serif; margin: 12px 0 18px; padding-top: 12px; border-top: 1.5px solid #000; }
+.pov .sortcard .col2 { display: grid; gap: 10px; }
+.pov .sortcard button { height: 56px; border: 1.5px solid #000; background: #fff; font: 700 20px/1 "Johnson Text", Arial, sans-serif; color: #000; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; gap: 8px; transition: background .2s, color .2s; }
+.pov .sortcard button:hover { background: #000; color: #fff; }
+.pov .sortcard button svg { width: 19px; height: 19px; }
+.pov .sortcard .msg { font: 600 19px/1.35 "Johnson Text", Arial, sans-serif; margin-top: 14px; padding-left: 12px; border-left: 3px solid var(--red); }
+.pov .sortcard.shake { animation: shake .45s; }
+@keyframes shake { 20%, 60% { transform: translateX(-8px); } 40%, 80% { transform: translateX(8px); } }
+.pov .sortdone { display: grid; justify-items: start; gap: 14px; padding: 36px 6px 0; }
+.pov .sortdone .done-mark { width: 76px; height: 76px; }
+.pov .sortdone .big { font: 400 34px/1.12 "Johnson Display", Georgia, serif; color: #000; }
+.pov .sortdone p { font-size: 21px; line-height: 1.45; color: #3A3532; }
+.pov .sortdone .code { display: grid; gap: 6px; border-top: 1.5px solid #000; padding-top: 12px; }
+.pov .sortdone .code b { font: 400 44px/1 "Johnson Display", Georgia, serif; color: var(--red-dk); }
+.pov .sortdone .code span { font-size: 18px; line-height: 1.3; color: #3A3532; }
+
+/* ---------- 7 and 8. cases ---------- */
+.pov .finding { font-size: 24px; line-height: 1.45; padding: 14px 0 16px; border-top: 1.5px solid #000; border-bottom: 1px solid #C1BBB3; margin: 16px 0 22px; }
+.pov .mcq { font: 700 23px/1.3 "Johnson Text", Arial, sans-serif; margin-bottom: 12px; }
+.pov .opts { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.pov .opt { display: flex; align-items: center; gap: 14px; min-height: 68px; padding: 8px 14px 8px 8px; border: 1.5px solid #C1BBB3; background: #fff; font: 600 21px/1.2 "Johnson Text", Arial, sans-serif; color: #000; cursor: pointer; text-align: left; transition: border-color .2s, box-shadow .2s; }
+.pov .opt:hover { border-color: #000; }
+.pov .opt .badge { width: 48px; height: 48px; display: grid; place-items: center; font: 400 30px/1 "Johnson Display", Georgia, serif; color: var(--red-dk); background: #F1EFED; flex: none; transition: background .2s, color .2s; }
+.pov .opt[aria-checked="true"] { border-color: var(--red); box-shadow: inset 0 0 0 1.5px var(--red); }
+.pov .opt[aria-checked="true"] .badge { background: var(--red); color: #fff; }
+
+/* ---------- 9. it starts in the OR ---------- */
+.pov .legend { display: flex; flex-wrap: wrap; gap: 6px 28px; font: 500 20px/1.2 "Johnson Text", Arial, sans-serif; }
+.pov .legend span { display: inline-flex; align-items: baseline; gap: 8px; }
+.pov .legend b { color: var(--red); font: 400 26px/1 "Johnson Display", Georgia, serif; }
+.pov .mrow { display: grid; grid-template-columns: 70px 1fr 336px; align-items: center; gap: 22px; padding: 10px 0; border-top: 1.5px solid #000; }
+.pov .mrow:last-child { border-bottom: 1px solid #C1BBB3; }
+.pov .mrow .kn { font-size: 48px; }
+.pov .mrow b { display: block; font: 700 24px/1.2 "Johnson Text", Arial, sans-serif; }
+.pov .mrow .src { display: block; font: 400 19px/1.32 "Johnson Text", Arial, sans-serif; color: #3A3532; margin-top: 4px; }
+.pov .mrow .res { display: block; font: 600 19px/1.3 "Johnson Text", Arial, sans-serif; margin-top: 8px; padding-left: 12px; border-left: 3px solid #000; }
+.pov .mrow .res:empty { display: none; }
+.pov .mrow .ttl { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.pov .mrow .ttl .chip { padding: 5px 10px; animation: elin .4s cubic-bezier(.22,1,.36,1) both; }
+.pov .seg { display: flex; gap: 8px; }
+.pov .seg button { width: 78px; height: 62px; border: 1.5px solid #C1BBB3; background: #fff; font: 400 34px/1 "Johnson Display", Georgia, serif; color: var(--red-dk); cursor: pointer; transition: border-color .2s, background .2s; }
+.pov .seg button:hover { border-color: #000; }
+.pov .seg button[aria-pressed="true"].right { background: var(--ok); border-color: var(--ok); color: #fff; }
+.pov .seg button[aria-pressed="true"].wrong { border-color: #000; color: #000; text-decoration: line-through; }
+.pov .seg button[disabled]:not([aria-pressed="true"]) { opacity: .35; cursor: default; }
+
+/* ---------- 10. recap ---------- */
+.pov .take { display: grid; grid-template-columns: 84px 1fr; gap: 14px; border-top: 1.5px solid rgba(255,255,255,.9); padding: 16px 0 20px; }
+.pov .take .kn { font-size: 56px; color: #fff; }
+.pov .take p { font-size: 25px; line-height: 1.38; color: #fff; padding-top: 4px; }
+.pov .done-mark { width: 84px; height: 84px; }
+.pov .done-mark circle { fill: none; stroke: var(--red); stroke-width: 5; }
+.pov .done-mark path { fill: none; stroke: var(--red); stroke-width: 7; stroke-linecap: round; stroke-linejoin: round; stroke-dasharray: 60; stroke-dashoffset: 60; animation: draw .8s .55s ease-out forwards; }
+.pov .reveal .done-mark path { animation: draw .8s .35s ease-out forwards; }
+.pov .wait .done-mark path { animation: none; }
+@keyframes draw { to { stroke-dashoffset: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .pov .reveal, .pov .pnl.reveal, .pov .pnl.reveal > .abs, .pov .fbcard, .pov .fbx, .pov .lay-panel, .pov .placed, .pov .sortcard, .pov .pnl .photo.kb,
+  .pov.cover .cv-red, .pov.cover .cv-photo, .pov.cover .cv-info, .pov.cover.leaving { animation: none !important; }
+  .pov .done-mark path { stroke-dashoffset: 0; animation: none !important; }
+  .pov .tile, .pov .btn svg, .pov .tile .hint svg { transition: none; }
+}
